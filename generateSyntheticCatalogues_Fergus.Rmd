@@ -1,0 +1,66 @@
+# Example on the use of ETAS.inlabru for making synthetic temporal ETAS catalogues
+
+```{r}
+install.packages("lemon")
+install.packages("tidyquant")
+install.packages("foreach")
+install.packages("GGally")
+install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+```
+```{r}
+
+library(ETAS.inlabru)
+library(ggplot2)
+library(dplyr)
+```
+# Create catalogue
+
+- define ETAS parameters
+- define model domain
+- specify a history
+- generate ETAS sample
+- plot the results
+
+```{r}
+mu <- 1000./365
+K <- 0.089
+alpha <- 2.29
+c <- 0.011
+p <- 1.08
+
+modelledDuration = 1000  # [days]
+
+M0 = 2
+
+theta_etas <- data.frame(mu=mu, K=K, alpha=alpha, c=c, p=p)
+
+Ht <- data.frame(ts=c(0 , 500), magnitudes=c(7., 7.))
+
+samp.etas.list <- generate.temporal.ETAS.synthetic(theta = theta_etas, beta.p = log(10), M0 = M0, T1 = 0, T2 = modelledDuration, Ht=Ht)
+
+ggplot() + 
+  geom_point(data = samp.etas.list[[1]], aes(x=ts, y=magnitudes), color='red') + 
+  geom_point(data = samp.etas.list[[2]], aes(x=ts, y=magnitudes), color='green') + 
+  xlim(0, modelledDuration) +
+  ggtitle("Background and ETAS")
+
+combined.M7.ETAS.cat <- bind_rows(samp.etas.list)
+
+combined.M7.ETAS.cat <- bind_rows(samp.etas.list)
+combined.M7.ETAS.cat <- combined.M7.ETAS.cat[order(combined.M7.ETAS.cat$ts),]
+
+combined.M7.ETAS.cat$ID = seq(1,length(combined.M7.ETAS.cat$ts))
+
+ggplot() + 
+  geom_point(data = combined.M7.ETAS.cat, aes(x=ID, y=magnitudes), color='red') #+ 
+  #geom_ma(data = combined.M7.ETAS.cat, aes(x=ID, y=magnitudes), ma_fun = SMA, n = 10)
+
+```
+
+
+```{r}
+png(file="Background and ETAS" ,
+width=600, height=350)
+dev.off()
+```
+
