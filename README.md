@@ -12,3 +12,11 @@ Or straight copy the code into a python command
 You can see my motified code from Naylor (2022), 
 link to the orginal code: https://github.com/edinburgh-seismicity-hub/ETAS.inlabru/tree/main/notebooks/generateSyntheticCatalogues
 If you want to try it out you will need to download R, R Studio and ETAS.inlabru on your device. 
+
+
+N=length(cat$ts)
+iet =cat$ts[2:N]-cat$ts[1:N-1]
+
+directory <-getwd()
+directory
+write.csv(iet, "Interevent_time_catalog_Touatis.csv")
