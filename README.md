@@ -4,8 +4,8 @@ This is a place to put my code and extended results so it can easily be checked.
 # Saichev and Sornette Function and Widget
 
 To see the code for Saichev and Sornettes click on the file. 
-If you wish to try out the code you can then copy and paste it into Juytper notebooks (a interactiveonline python tool). 
-Or the straigh code into a python command
+If you wish to try out the code you can then copy and paste it into Juytper notebooks (a interactive online python tool). 
+Or straight copy the code into a python command
 
 # Synthetic Earthquake catalogues by ETAS.inlabru
 
