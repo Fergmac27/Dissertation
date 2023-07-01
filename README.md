@@ -1,7 +1,7 @@
 # Dissertation
 This is a place to put my code and extended results so it can easily be checked. 
 
-# Saichev and Sornette Function and Widget:
+# Saichev and Sornette Function and Widget
 
 To see the code for Saichev and Sornettes click on the file. 
 If you wish to try out the code you can then copy and paste it into Juytper notebooks (a interactiveonline python tool). 
