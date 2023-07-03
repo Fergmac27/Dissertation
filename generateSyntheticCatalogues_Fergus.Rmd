@@ -72,6 +72,16 @@ combined.M7.ETAS.cat <- combined.M7.ETAS.cat[order(combined.M7.ETAS.cat$ts),]
 combined.M7.ETAS.cat$ID = seq(1,length(combined.M7.ETAS.cat$ts))
 
 ```
+# Create The interevent time catalogue 
+
+```{r}
+N=length(combined.M7.ETAS.cat$ts)
+iet =combined.M7.ETAS.cat$ts[2:N]-combined.M7.ETAS.cat$ts[1:N-1]
+
+directory <-getwd()
+directory
+write.csv(iet, "New_Interevent_time_catalog.csv")
+```
 
 # Plot an image of the combined catalogue
 
@@ -89,8 +99,11 @@ ggplot() +
 # Create a picture for results 
 
 ```{r}
-png(file="Background and ETAS" ,
-width=600, height=350)
-dev.off()
+N=length(combined.M7.ETAS.cat$ts)
+iet =combined.M7.ETAS.cat$ts[2:N]-combined.M7.ETAS.cat$ts[1:N-1]
+
+directory <-getwd()
+directory
+write.csv(iet, "New_Interevent_time_catalog.csv")
 ```
 
