@@ -31,11 +31,11 @@ library(dplyr)
 # Define ETAS parameters 
 
 ```{r}
-mu <- 1000./365
-K <- 0.089
-alpha <- 2.29
-c <- 0.011
-p <- 1.08
+mu <- 1000
+K <- 0.03981071706
+alpha <- 1
+c <- 0.01
+p <- 1.2
 
 
 theta_etas <- data.frame(mu=mu, K=K, alpha=alpha, c=c, p=p)
@@ -49,7 +49,7 @@ theta_etas <- data.frame(mu=mu, K=K, alpha=alpha, c=c, p=p)
 ```{r}
 
 M0 = 2
-modelledDuration = 10000  # [days]
+modelledDuration = 100 # [days]
 
 ```
 
@@ -80,7 +80,7 @@ iet =combined.M7.ETAS.cat$ts[2:N]-combined.M7.ETAS.cat$ts[1:N-1]
 
 directory <-getwd()
 directory
-write.csv(iet, "New_Interevent_time_catalog.csv")
+write.csv(iet, "1000_mu_value_changedK_interevent_time_catalog.csv")
 ```
 
 # Plot an image of the combined catalogue
@@ -94,16 +94,5 @@ ggplot() +
 ggplot() + 
   geom_point(data = combined.M7.ETAS.cat, aes(x=ID, y=magnitudes), color='red') + ggtitle("Background ETAS in ID")
 
-```
-
-# Create a picture for results 
-
-```{r}
-N=length(combined.M7.ETAS.cat$ts)
-iet =combined.M7.ETAS.cat$ts[2:N]-combined.M7.ETAS.cat$ts[1:N-1]
-
-directory <-getwd()
-directory
-write.csv(iet, "New_Interevent_time_catalog.csv")
 ```
 
