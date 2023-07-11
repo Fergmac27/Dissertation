@@ -1,0 +1,98 @@
+# ETAS.inlabru for making synthetic temporal ETAS catalogues
+
+# Installing some extra packages to make sure the main packages work 
+
+```{r}
+install.packages("lemon")
+install.packages("tidyquant")
+install.packages("foreach")
+install.packages("GGally")
+install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
+
+```
+
+# The main packages to run the code 
+
+```{r}
+
+library(ETAS.inlabru)
+library(ggplot2)
+library(dplyr)
+```
+
+# Creating the catalogue
+
+- Step 1: Define ETAS parameters
+- Step 2: Define model domain
+- Step 3: Generate ETAS sample
+- Step 4: Combine different lists of different generation earthquakes 
+- Step 4: Plot the results
+
+# Define ETAS parameters 
+
+```{r}
+mu <- 1000
+K <- 0.03981071706
+alpha <- 1
+c <- 0.01
+p <- 1.2
+
+
+theta_etas <- data.frame(mu=mu, K=K, alpha=alpha, c=c, p=p)
+
+```
+
+
+# Define model domain 
+
+
+```{r}
+
+M0 = 2
+modelledDuration = 100 # [days]
+
+```
+
+# Generate ETAS Sythetic
+
+
+```{r}
+
+samp.etas.list <- generate.temporal.ETAS.synthetic(theta = theta_etas, beta.p = log(10), M0 = M0, T1 = 0, T2 = modelledDuration)
+
+```
+
+# Combine lists of differnet generation earthqaukes to crete one big catalogue 
+
+```{r}
+combined.M7.ETAS.cat <- bind_rows(samp.etas.list)
+
+combined.M7.ETAS.cat <- combined.M7.ETAS.cat[order(combined.M7.ETAS.cat$ts),]
+
+combined.M7.ETAS.cat$ID = seq(1,length(combined.M7.ETAS.cat$ts))
+
+```
+# Create The interevent time catalogue 
+
+```{r}
+N=length(combined.M7.ETAS.cat$ts)
+iet =combined.M7.ETAS.cat$ts[2:N]-combined.M7.ETAS.cat$ts[1:N-1]
+
+directory <-getwd()
+directory
+write.csv(iet, "1000_mu_value_changedK_interevent_time_catalog.csv")
+```
+
+# Plot an image of the combined catalogue
+
+```{r}
+ggplot() + 
+  geom_point(data = combined.M7.ETAS.cat, aes(x=ts, y=magnitudes), color='green') + 
+  xlim(0, modelledDuration) +
+  ggtitle("Background ETAS in time")
+
+ggplot() + 
+  geom_point(data = combined.M7.ETAS.cat, aes(x=ID, y=magnitudes), color='red') + ggtitle("Background ETAS in ID")
+
+```
+
