@@ -13,3 +13,7 @@ You can see my motified code from Naylor (2022),
 link to the orginal code: https://github.com/edinburgh-seismicity-hub/ETAS.inlabru/tree/main/notebooks/generateSyntheticCatalogues
 If you want to try it out you will need to download R, R Studio and ETAS.inlabru on your device. 
 
+# Python notebooks
+
+You can see my results and code to get my results. 
+
